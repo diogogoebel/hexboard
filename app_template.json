@@ -30,7 +30,7 @@
         },
         {
             "description": "php builder image",
-            "value": "openshift/php",
+            "value": "openshift/php-55-centos7",
             "name": "PHP_BUILDER_IMAGE"
         },
         {
