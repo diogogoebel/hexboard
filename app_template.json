@@ -29,6 +29,11 @@
             "name": "BUILDER_IMAGE"
         },
         {
+            "description": "php builder image",
+            "value": "openshift/php",
+            "name": "PHP_BUILDER_IMAGE"
+        },
+        {
             "description": "Number of winners",
             "value": "10",
             "name": "WINNER_COUNT"
@@ -113,7 +118,7 @@
                     "sourceStrategy": {
                         "from": {
                             "kind": "DockerImage",
-                            "name": "${BUILDER_IMAGE}:latest"
+                            "name": "${PHP_BUILDER_IMAGE}:latest"
                         },
                         "incremental": true
                     }
