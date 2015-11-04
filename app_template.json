@@ -14,6 +14,11 @@
     },
     "parameters": [
         {
+            "description": "OpenShift Server (REQUIRED)",
+            "value": "origin.v3.ops.getupcloud.com:8443",
+            "name": "OPENSHIFT_SERVER"
+        },
+        {
             "description": "OpenShift OAuth token (REQUIRED)",
             "value": "Missing!",
             "name": "ACCESS_TOKEN"
@@ -57,9 +62,9 @@
             "kind": "ImageStream",
             "apiVersion": "v1",
             "metadata": {
-                "name": "sketchpod",
+                "name": "site",
                 "labels": {
-                    "servicegroup": "sketchpod"
+                    "servicegroup": "site-hexboard"
                 },
                 "creationTimestamp": null
             },
@@ -72,9 +77,9 @@
             "kind": "BuildConfig",
             "apiVersion": "v1",
             "metadata": {
-                "name": "sketchpod",
+                "name": "site",
                 "labels": {
-                    "servicegroup": "sketchpod"
+                    "servicegroup": "site-hexboard"
                 },
                 "creationTimestamp": null
             },
@@ -100,7 +105,7 @@
                 "source": {
                     "type": "Git",
                     "git": {
-                        "uri": "http://github.com/2015-Middleware-Keynote/sketchpod"
+                        "uri": "https://github.com/diogogoebel/site.git"
                     }
                 },
                 "strategy": {
@@ -116,7 +121,7 @@
                 "output": {
                     "to": {
                         "kind": "ImageStreamTag",
-                        "name": "sketchpod:latest"
+                        "name": "site:latest"
                     }
                 },
                 "resources": {}
@@ -129,9 +134,9 @@
             "kind": "DeploymentConfig",
             "apiVersion": "v1",
             "metadata": {
-                "name": "sketchpod",
+                "name": "site",
                 "labels": {
-                    "servicegroup": "sketchpod"
+                    "servicegroup": "site-hexboard"
                 },
                 "creationTimestamp": null
             },
@@ -149,31 +154,31 @@
                         "imageChangeParams": {
                             "automatic": true,
                             "containerNames": [
-                                "sketchpod"
+                                "site"
                             ],
                             "from": {
                                 "kind": "ImageStreamTag",
-                                "name": "sketchpod:latest"
+                                "name": "site:latest"
                             }
                         }
                     }
                 ],
                 "replicas": 1,
                 "selector": {
-                    "deploymentconfig": "sketchpod"
+                    "deploymentconfig": "site"
                 },
                 "template": {
                     "metadata": {
                         "creationTimestamp": null,
                         "labels": {
-                            "deploymentconfig": "sketchpod"
+                            "deploymentconfig": "site"
                         }
                     },
                     "spec": {
                         "containers": [
                             {
-                                "name": "sketchpod",
-                                "image": "sketchpod:latest",
+                                "name": "site",
+                                "image": "site:latest",
                                 "livenessProbe": {
                                     "httpGet": {
                                         "path": "/status",
@@ -184,7 +189,7 @@
                                 },
                                 "ports": [
                                     {
-                                        "name": "sketchpodtcp",
+                                        "name": "sitetcp",
                                         "containerPort": 8080,
                                         "protocol": "TCP"
                                     }
@@ -209,16 +214,16 @@
             "kind": "Service",
             "apiVersion": "v1",
             "metadata": {
-                "name": "sketchpod",
+                "name": "site",
                 "labels": {
-                    "servicegroup": "sketchpod"
+                    "servicegroup": "site-hexboard"
                 },
                 "creationTimestamp": null
             },
             "spec": {
                 "ports": [
                     {
-                        "name": "sketchpodtcp",
+                        "name": "sitetcp",
                         "protocol": "TCP",
                         "port": 8080,
                         "targetPort": 8080,
@@ -226,7 +231,7 @@
                     }
                 ],
                 "selector": {
-                    "deploymentconfig": "sketchpod"
+                    "deploymentconfig": "site"
                 },
                 "portalIP": "",
                 "type": "ClusterIP"
@@ -273,7 +278,7 @@
                 "source": {
                     "type": "Git",
                     "git": {
-                        "uri": "http://github.com/2015-Middleware-Keynote/hexboard",
+                        "uri": "https://github.com/diogogoebel/hexboard.git",
                         "ref": "master"
                     }
                 },
