@@ -181,7 +181,7 @@
                                 "image": "site:latest",
                                 "livenessProbe": {
                                     "httpGet": {
-                                        "path": "/status",
+                                        "path": "/",
                                         "port": 8080
                                     },
                                     "timeoutSeconds": 5,
@@ -352,7 +352,7 @@
                                 "image": "hexboard:latest",
                                 "livenessProbe": {
                                     "httpGet": {
-                                        "path": "/status",
+                                        "path": "/",
                                         "port": 8080
                                     },
                                     "timeoutSeconds": 5,
